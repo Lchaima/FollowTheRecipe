@@ -8,7 +8,11 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.shape.AbsoluteCutCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -42,8 +46,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.followtherecipe.R
+import com.example.followtherecipe.model.Recipe
 import com.example.followtherecipe.ui.theme.FollowTheRecipeTheme
 import com.example.followtherecipe.viewmodel.ConverterViewModel
+import com.example.followtherecipe.viewmodel.RecipeViewModel
 import com.example.followtherecipe.viewmodel.TabItem
 import com.example.followtherecipe.viewmodel.TabItemViewModel
 
@@ -70,7 +76,7 @@ fun BasicLayout(tabItemViewmodel : TabItemViewModel = viewModel()){
     Scaffold (
         topBar= { TopAppBar {
             Text(
-                text=" FollowTheRecipe",
+                text= stringResource(R.string.AppName),
                 fontWeight = FontWeight.Bold,
                 fontSize = 22.sp
             )
@@ -111,14 +117,38 @@ fun MyBottomNavigation(items: List<TabItem> , navController: NavController){
 
 @Composable
 fun MainScreen(){
-    Card(
-        modifier = Modifier.fillMaxWidth().padding(20.dp).fillMaxHeight(0.5f)
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+    ) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp)
+                .fillMaxHeight(0.5f)
 
-    ){
-        Image(
-            painter = painterResource(id = R.drawable.image),
-            contentDescription = stringResource(id = R.string.home_image_description)
-        )
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.image),
+                contentDescription = stringResource(id = R.string.home_image_description)
+            )
+        }
+        Card(
+            modifier = Modifier.padding(horizontal = 20.dp, vertical = 20.dp),
+            elevation = 10.dp,
+            backgroundColor = MaterialTheme.colors.secondary,
+            shape= AbsoluteCutCornerShape(8.dp)
+        ) {
+            Text(
+                modifier = Modifier.padding(10.dp),
+                text = stringResource(R.string.homeScreenDescription),
+                textAlign = TextAlign.Justify,
+                color = Color.White,
+                fontSize = 18.sp
+
+            )
+        }
     }
 
 }
@@ -138,8 +168,16 @@ fun Converter(converterViewModel: ConverterViewModel = viewModel()){
 }
 
 @Composable
-fun Recipe(){
-    Text("Recipe")
+fun Recipe(recipeViewModel: RecipeViewModel = viewModel()){
+    Column() {
+        Text(
+            text= stringResource(R.string.recipesScreenTitle),
+            fontWeight = FontWeight.Bold,
+            fontSize = 22.sp
+        )
+        RecipeList(recipeViewModel.recipes)
+    }
+
 }
 
 @Composable
@@ -285,6 +323,32 @@ fun IngredientList(onClick:(Float) -> Unit){
                 }
             }
         }
+    }
+}
+
+
+
+@Composable
+fun RecipeList(recipes : List<Recipe>) {
+    LazyColumn(
+        modifier = Modifier.padding(10.dp)
+    ){
+      items(recipes){
+          recipe->
+          Column {
+              Text(
+                  text = recipe.title,
+                  modifier = Modifier.padding(top = 4.dp, bottom = 4.dp),
+                  fontWeight = FontWeight.Bold
+              )
+              Text(
+                  text= recipe.summary,
+                  modifier = Modifier.padding(top=8.dp)
+              )
+              Divider(color=Color.LightGray, thickness = 3.dp)
+          }
+          
+      }  
     }
 }
 

@@ -3,4 +3,7 @@
     <string name="ConverterTitle">Converter</string>
     <string name="ConverterContent">enter the number of grams to convert it to milliliter or number of tablespoons</string>
     <string name="home_image_description" > the displayed image in the home screen </string>
+    <string name="homeScreenDescription">thanks to this application your  can follow your recipe easily using the converter : convert the quantity of each ingredient from grammes to milliliter or tablespoon and get inspired by our recipe suggestions</string>
+    <string name="recipesScreenTitle">Random Recipes</string>
+    <string name="AppName">FollowTheRecipe</string>
 </resources>
