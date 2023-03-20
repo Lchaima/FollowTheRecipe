@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">FollowTheRecipe</string>
+    <string name="ConverterTitle">Converter</string>
+    <string name="ConverterContent">enter the number of grams to convert it to milliliter or number of tablespoons</string>
+    <string name="home_image_description" > the displayed image in the home screen </string>
+</resources>
